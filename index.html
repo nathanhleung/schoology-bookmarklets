@@ -49,23 +49,7 @@
 											<h2>View Your Grades</h2>
 										</header>
 										<p>Use this bookmarket to view all your grades immediately on the Grades/Attendance page. Drag the bookmarklet to your bookmarks bar to begin.</p>
-										<pre>
-											<!-- pre preserves whitespace, so we have to indent all the way back -->
-										  <code>
-$('.nathan-appended').remove(); // remove previously appended stuff
-// find each course
-$('.gradebook-course').each((i, el) => {
-  // for each course, find the course grade
-  const grade = $(el).find('.summary-course .rounded-grade').html();
-  // put the grade next to the course title
-  $(el).find('.gradebook-course-title').append(
-    // give nathan-appended class so then we can remove the stuff later
-    // grade || 'N/A' -> if grade is undefined, then 'N/A' will print
-    ` <span class='nathan-appended' style='color: #3aa406; font-size: 13px; font-weight: bold; padding-right: 10px; float: right;'>${grade || 'N/A'}</span>`
-  );
-});
-										  </code>
-										</pre>
+										<script src="https://gist.github.com/nathanhleung/ed47ec099a10c311f5d92f1b8d694db1.js"></script>
 										<ul class="actions">
 											<li><a href="javascript:$('.nathan-appended').remove(); $('.gradebook-course').each((i, el) => { const grade = $(el).find('.summary-course .rounded-grade').html(); $(el).find('.gradebook-course-title').append(` <span class='nathan-appended' style='color: #3aa406;font-size:13px;font-weight:bold;padding-right:10px;float:right;'>${grade || 'N/A'}</span>`); });" class="button special">Show Grades</a></li>
 										</ul>
