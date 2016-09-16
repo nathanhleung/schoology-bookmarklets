@@ -1795,6 +1795,7 @@
 	}
 
 		pre code {
+			white-space: pre-line;
 			display: block;
 			line-height: 1.75;
 			padding: 1em 1.5em;
