@@ -3027,13 +3027,13 @@
 			display: inline-block;
 			margin-left: 4em;
 			padding: 0.65em;
-			border-radius: 100%;
+			border-radius: 10px;
 			border: solid 1px;
 		}
 
 			.spotlight .image img {
 				display: block;
-				border-radius: 100%;
+				border-radius: 10px;
 				width: 16em;
 			}
 
