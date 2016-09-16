@@ -3034,7 +3034,7 @@
 			.spotlight .image img {
 				display: block;
 				border-radius: 10px;
-				width: 16em;
+				width: 30em;
 			}
 
 		@media screen and (max-width: 980px) {
@@ -3796,3 +3796,9 @@
 			}
 
 		}
+		
+/* Personal overrides */
+.img-responsive {
+	width: 100%;
+	height: auto;
+}
