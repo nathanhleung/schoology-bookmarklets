@@ -67,7 +67,7 @@
 								</header>
 								<footer class="major">
 									<ul class="actions">
-										<li><a href="javascript:$('.nathan-appended').remove(); $('.gradebook-course').each((i, el) => { const grade = $(el).find('.summary-course .rounded-grade').html(); $(el).find('.gradebook-course-title').append(` <span class='nathan-appended' style='color: #3aa406;font-size:13px;font-weight:bold;padding-right:10px;float:right;'>${grade || 'N/A'}</span>`); });" class="button special">Show Grades</a></li>
+										<li><a href="javascript:$('.nathan-appended').remove();$('.gradebook-course').each((i,el)=>{const mpGrades=$(el).find('.period-row .awarded-grade .rounded-grade');const latestMp=mpGrades[mpGrades.length-1];const grade=$(latestMp).html();const overallGrade=$(el).find('.summary-course .awarded-grade .rounded-grade').html();$(el).find('.gradebook-course-title').append(`<div class='nathan-appended' style=' position: relative; top: -10px; right: 20px; text-align: right; color: #3aa406; font-size: 13px; font-weight: bold; float: right; ' >MP: ${grade || 'N/A'}<br>Average: ${overallGrade || 'N/A'}</div>`)})" class="button special">Show Grades</a></li>
 									</ul>
 								</footer>
 							</section>
