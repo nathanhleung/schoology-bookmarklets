@@ -1,0 +1,8 @@
+{
+  "name": "schoology-bookmarklets",
+  "version": "1.0.0",
+  "repository": "https://github.com/nathanhleung/schoology-bookmarklets",
+  "author": "nathanhleung <me@nathanhleung.com>",
+  "license": "MIT",
+  "private": false
+}

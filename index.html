@@ -25,18 +25,10 @@
 				<!-- Header -->
 					<header id="header" class="alt">
 						<!-- <span class="logo"><img src="images/logo.svg" alt="" /></span> -->
-						<h1>Schoology Bookmarklets</h1>
-						<p>Use these bookmarklets to help you navigate Schoology better. Works even if extensions are disabled!<br />
+						<h1>Schoology — Show All Grades</h1>
+						<p>Use this bookmarklet to view your Schoology grades faster. No extension required.<br />
 						Built by <a href="https://github.com/nathanhleung">@nathanhleung</a>.</p>
 					</header>
-
-				<!-- Nav -->
-					<nav id="nav">
-						<ul>
-							<li><a href="#intro" class="active">View Your Grades</a></li>
-							<li><a href="#cta">All Bookmarklets</a></li>
-						</ul>
-					</nav>
 
 				<!-- Main -->
 					<div id="main">
@@ -48,30 +40,17 @@
 										<header class="major">
 											<h2>View Your Grades</h2>
 										</header>
-										<p>Use this bookmarket to view all your grades immediately on the Grades/Attendance page. Drag the bookmarklet to your bookmarks bar to begin.</p>
+										<p>Use this bookmarket to view all your grades immediately on the Grades page in Schoology.</p>
+										<p>Drag the blue button to your bookmarks bar to begin.</p>
+										<p>When you use the bookmarklet, anonymous usage data will be collected. By installing and using the bookmarklet, you consent to this data collection.</p>
 										<ul class="actions">
-											<li><a href="javascript:$('.nathan-appended').remove();$('.gradebook-course').each((i,el)=>{const mpGrades=$(el).find('.period-row .awarded-grade .rounded-grade');const latestMp=mpGrades[mpGrades.length-1];const grade=$(latestMp).html();const overallGrade=$(el).find('.summary-course .awarded-grade .rounded-grade').html();$(el).find('.gradebook-course-title').append(`<div class='nathan-appended' style=' position: relative; top: -10px; right: 20px; text-align: right; color: #3aa406; font-size: 13px; font-weight: bold; float: right; ' >MP: ${grade || 'N/A'}<br>Average: ${overallGrade || 'N/A'}</div>`)})" class="button special">Show Grades</a></li>
+											<li><a href="#" id="bookmarklet" class="button special" disabled>Show All Grades</a></li>
 											<li><a href="https://gist.github.com/nathanhleung/ed47ec099a10c311f5d92f1b8d694db1#file-show-grades-js" class="button">Source Code</a></li>
 										</ul>
 									</div>
 									<span class="image"><img class="img-responsive" src="https://i.gyazo.com/2cda17530adbe759b39fa061d99ebd66.gif" alt="" /></span>
 								</div>
 							</section>
-
-						<!-- Get Started -->
-							<section id="cta" class="main special">
-								<header class="major">
-									<h2>All Bookmarklets</h2>
-									<p>Drag these bookmarklets to your bookmarks bar to begin using them. More coming soon!</p>
-									<span class="image"><img class="img-responsive" src="https://i.gyazo.com/2cda17530adbe759b39fa061d99ebd66.gif" /></span>
-								</header>
-								<footer class="major">
-									<ul class="actions">
-										<li><a href="javascript:$('.nathan-appended').remove();$('.gradebook-course').each((i,el)=>{const mpGrades=$(el).find('.period-row .awarded-grade .rounded-grade');const latestMp=mpGrades[mpGrades.length-1];const grade=$(latestMp).html();const overallGrade=$(el).find('.summary-course .awarded-grade .rounded-grade').html();$(el).find('.gradebook-course-title').append(`<div class='nathan-appended' style=' position: relative; top: -10px; right: 20px; text-align: right; color: #3aa406; font-size: 13px; font-weight: bold; float: right; ' >MP: ${grade || 'N/A'}<br>Average: ${overallGrade || 'N/A'}</div>`)})" class="button special">Show Grades</a></li>
-									</ul>
-								</footer>
-							</section>
-
 					</div>
 
 				<!-- Footer -->
@@ -82,6 +61,7 @@
 			</div>
 
 		<!-- Scripts -->
+			<script src="http://wzrd.in/standalone/uuid%2Fv4@latest"></script>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 			<script src="assets/js/jquery.scrollex.min.js"></script>
 			<script src="assets/js/jquery.scrolly.min.js"></script>
@@ -89,6 +69,59 @@
 			<script src="assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script><![endif]-->
 			<script src="assets/js/main.js"></script>
+			<script>
+				$(document).ready(() => {
+					const $bookmarklet = $('#bookmarklet');
 
+					// Have to use /* */ comments because the lines get collapsed
+          function bookmarklet() {
+						/* Segment Analytics Code */
+						!function(){var analytics=window.analytics=window.analytics||[];if(!analytics.initialize)if(analytics.invoked)window.console&&console.error&&console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","reset","group","track","ready","alias","debug","page","once","off","on"];analytics.factory=function(t){return function(){var e=Array.prototype.slice.call(arguments);e.unshift(t);analytics.push(e);return analytics}};for(var t=0;t<analytics.methods.length;t++){var e=analytics.methods[t];analytics[e]=analytics.factory(e)}analytics.load=function(t){var e=document.createElement("script");e.type="text/javascript";e.async=!0;e.src=("https:"===document.location.protocol?"https://":"http://")+"cdn.segment.com/analytics.js/v1/"+t+"/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(e,n)};analytics.SNIPPET_VERSION="4.0.0";
+					  analytics.load("OFUUvfihcLcT8OAeLbILMrIBYjlFjtJf");
+					  analytics.page();
+						analytics.identify("{{uuid}}");
+						analytics.track('Bookmarklet Used');
+					  }}();
+            /* Remove previously appended elements */
+            $('.nathan-appended').remove();
+            /* Iterate over each course */
+						$('.gradebook-course').each((i, el) => {
+              /* Find individual marking period grades within course */
+              const mpGrades = $(el).find('.period-row .awarded-grade .rounded-grade');
+              /* The most recent marking period will be the last one */
+              const latestMp = mpGrades[mpGrades.length - 1];
+              const grade = $(latestMp).html();
+              const overallGrade = $(el).find('.summary-course .awarded-grade .rounded-grade').html();
+              /* Append the grade information */
+              $(el).find('.gradebook-course-title').append(`
+                <div
+                  class='nathan-appended'
+                  style='
+                    position: relative;
+                    top: -10px;
+                    right: 20px;
+                    text-align: right;
+                    color: #3aa406;
+                    font-size: 13px;
+                    font-weight: bold;
+                    float: right;
+                  '
+                >
+                  MP: ${grade || 'N/A'}<br>
+                  Average: ${overallGrade || 'N/A'}
+                </div>
+							`);
+          	});
+					}
+
+					const transformed = bookmarklet.toString().replace("{{uuid}}", uuidv4());
+					// "Minify" the bookmarklet code
+					const spacesCollapsed = transformed.replace(/ +/g, " ");
+					const linesCollapsed = spacesCollapsed.replace(/[\n\t]/g, "");
+
+					const href = `javascript:${linesCollapsed};bookmarklet()`;
+					$bookmarklet.attr('href', href);
+				});
+			</script>
 	</body>
 </html>

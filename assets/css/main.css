@@ -3112,14 +3112,10 @@
 			}
 
 			#header.alt > * {
-				-moz-transition: opacity 3s ease;
-				-webkit-transition: opacity 3s ease;
-				-ms-transition: opacity 3s ease;
-				transition: opacity 3s ease;
-				-moz-transition-delay: 0.5s;
-				-webkit-transition-delay: 0.5s;
-				-ms-transition-delay: 0.5s;
-				transition-delay: 0.5s;
+				-moz-transition: opacity 2s ease;
+				-webkit-transition: opacity 2s ease;
+				-ms-transition: opacity 2s ease;
+				transition: opacity 2s ease;
 				opacity: 1;
 			}
 
@@ -3796,7 +3792,7 @@
 			}
 
 		}
-		
+
 /* Personal overrides */
 .img-responsive {
 	width: 100%;
