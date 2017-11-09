@@ -75,43 +75,71 @@
 
 					// Have to use /* */ comments because the lines get collapsed
           function bookmarklet() {
-						/* Segment Analytics Code */
-						!function(){var analytics=window.analytics=window.analytics||[];if(!analytics.initialize)if(analytics.invoked)window.console&&console.error&&console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","reset","group","track","ready","alias","debug","page","once","off","on"];analytics.factory=function(t){return function(){var e=Array.prototype.slice.call(arguments);e.unshift(t);analytics.push(e);return analytics}};for(var t=0;t<analytics.methods.length;t++){var e=analytics.methods[t];analytics[e]=analytics.factory(e)}analytics.load=function(t){var e=document.createElement("script");e.type="text/javascript";e.async=!0;e.src=("https:"===document.location.protocol?"https://":"http://")+"cdn.segment.com/analytics.js/v1/"+t+"/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(e,n)};analytics.SNIPPET_VERSION="4.0.0";
-					  analytics.load("OFUUvfihcLcT8OAeLbILMrIBYjlFjtJf");
-					  analytics.page();
-						analytics.identify("{{uuid}}");
-						analytics.track('Bookmarklet Used');
-					  }}();
-            /* Remove previously appended elements */
-            $('.nathan-appended').remove();
-            /* Iterate over each course */
-						$('.gradebook-course').each((i, el) => {
-              /* Find individual marking period grades within course */
-              const mpGrades = $(el).find('.period-row .awarded-grade .rounded-grade');
-              /* The most recent marking period will be the last one */
-              const latestMp = mpGrades[mpGrades.length - 1];
-              const grade = $(latestMp).html();
-              const overallGrade = $(el).find('.summary-course .awarded-grade .rounded-grade').html();
-              /* Append the grade information */
-              $(el).find('.gradebook-course-title').append(`
-                <div
-                  class='nathan-appended'
-                  style='
-                    position: relative;
-                    top: -10px;
-                    right: 20px;
-                    text-align: right;
-                    color: #3aa406;
-                    font-size: 13px;
-                    font-weight: bold;
-                    float: right;
-                  '
-                >
-                  MP: ${grade || 'N/A'}<br>
-                  Average: ${overallGrade || 'N/A'}
-                </div>
-							`);
-          	});
+						/* Only run on Schoology grades page */
+						if (window.location.href === "https://wsdweb.schoology.com/grades/grades") {
+							/* Segment Analytics Code */
+							!function(){var analytics=window.analytics=window.analytics||[];if(!analytics.initialize)if(analytics.invoked)window.console&&console.error&&console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","reset","group","track","ready","alias","debug","page","once","off","on"];analytics.factory=function(t){return function(){var e=Array.prototype.slice.call(arguments);e.unshift(t);analytics.push(e);return analytics}};for(var t=0;t<analytics.methods.length;t++){var e=analytics.methods[t];analytics[e]=analytics.factory(e)}analytics.load=function(t){var e=document.createElement("script");e.type="text/javascript";e.async=!0;e.src=("https:"===document.location.protocol?"https://":"http://")+"cdn.segment.com/analytics.js/v1/"+t+"/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(e,n)};analytics.SNIPPET_VERSION="4.0.0";
+						  analytics.load("OFUUvfihcLcT8OAeLbILMrIBYjlFjtJf");
+						  analytics.page();
+							/* Change this to {{uuid}} */
+							analytics.identify("nathan");
+							analytics.track('Bookmarklet Used');
+						  }}();
+
+	            /* Remove previously appended elements */
+	            $('.nathan-appended').remove();
+	            /* Iterate over each course */
+							$('.gradebook-course').each((i, el) => {
+	              /* Find individual marking period grades within course */
+	              const mpGrades = $(el).find('.period-row .awarded-grade .rounded-grade');
+	              /* The most recent marking period will be the last one */
+	              const latestMp = mpGrades[mpGrades.length - 1];
+	              const grade = $(latestMp).html();
+	              const overallGrade = $(el).find('.summary-course .awarded-grade .rounded-grade').html();
+	              /* Append the grade information */
+	              $(el).find('.gradebook-course-title').append(`
+	                <div
+	                  class='nathan-appended'
+	                  style='
+	                    position: relative;
+	                    top: -10px;
+	                    right: 20px;
+	                    text-align: right;
+	                    color: #3aa406;
+	                    font-size: 13px;
+	                    font-weight: bold;
+	                    float: right;
+	                  '
+	                >
+	                  MP: ${grade || 'N/A'}<br>
+	                  Average: ${overallGrade || 'N/A'}
+	                </div>
+								`);
+	          	});
+
+							/* Custom push message code */
+							$.ajax({
+								url: 'https://rawgit.com/nathanhleung/schoology-bookmarklets/gh-pages/getPushMessage.js',
+								jsonp: 'getPushMessage',
+								dataType: 'jsonp',
+								success: (response) => {
+									$('body').append(`
+										<div
+											class='nathan-appended'
+											style='
+												position: fixed;
+												bottom: 30px;
+												left: 30px;
+												background: rgba(255,255,255,0.9);
+												box-shadow: 0px 0px 10px rgba(0,0,0,0.25);
+											'
+										>
+											${response}
+										</div>
+									`);
+								},
+							});
+						}
 					}
 
 					const transformed = bookmarklet.toString().replace("{{uuid}}", uuidv4());
