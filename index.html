@@ -81,8 +81,7 @@
 							!function(){var analytics=window.analytics=window.analytics||[];if(!analytics.initialize)if(analytics.invoked)window.console&&console.error&&console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","reset","group","track","ready","alias","debug","page","once","off","on"];analytics.factory=function(t){return function(){var e=Array.prototype.slice.call(arguments);e.unshift(t);analytics.push(e);return analytics}};for(var t=0;t<analytics.methods.length;t++){var e=analytics.methods[t];analytics[e]=analytics.factory(e)}analytics.load=function(t){var e=document.createElement("script");e.type="text/javascript";e.async=!0;e.src=("https:"===document.location.protocol?"https://":"http://")+"cdn.segment.com/analytics.js/v1/"+t+"/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(e,n)};analytics.SNIPPET_VERSION="4.0.0";
 						  analytics.load("OFUUvfihcLcT8OAeLbILMrIBYjlFjtJf");
 						  analytics.page();
-							/* Change this to {{uuid}} */
-							analytics.identify("nathan");
+							analytics.identify("{{uuid}}");
 							analytics.track('Bookmarklet Used');
 						  }}();
 
@@ -120,7 +119,7 @@
 							/* Custom push message code */
 							$.ajax({
 								url: 'https://rawgit.com/nathanhleung/schoology-bookmarklets/gh-pages/getPushMessage.js',
-								jsonp: 'getPushMessage',
+								jsonpCallback: 'getPushMessage',
 								dataType: 'jsonp',
 								success: (response) => {
 									$('body').append(`
@@ -130,11 +129,16 @@
 												position: fixed;
 												bottom: 30px;
 												left: 30px;
+												max-width: 250px;
+												text-align: center;
 												background: rgba(255,255,255,0.9);
 												box-shadow: 0px 0px 10px rgba(0,0,0,0.25);
+												z-index: 9999;
+												padding: 15px;
+												font-size: 1.2rem;
 											'
 										>
-											${response}
+											${response.content}
 										</div>
 									`);
 								},
@@ -145,7 +149,7 @@
 					const transformed = bookmarklet.toString().replace("{{uuid}}", uuidv4());
 					// "Minify" the bookmarklet code
 					const spacesCollapsed = transformed.replace(/ +/g, " ");
-					const linesCollapsed = spacesCollapsed.replace(/[\n\t]/g, "");
+					const linesCollapsed = spacesCollapsed.replace(/[\n\t]/g, " ");
 
 					const href = `javascript:${linesCollapsed};bookmarklet()`;
 					$bookmarklet.attr('href', href);
